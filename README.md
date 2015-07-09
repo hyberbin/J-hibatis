@@ -20,6 +20,8 @@ public interface PropertiesDao {
 ```
 
 #### mapper配置文件
+sql语句用velocity模板引擎生成，支持动态SQL语句，和条件判断
+如果要用预处理参数必需用$.p.  获取
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
