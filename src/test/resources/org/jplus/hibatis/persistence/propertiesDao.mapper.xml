@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--<!DOCTYPE hibatisClassBean SYSTEM "hibatis-mapper.dtd">-->
+<hibatisClassBean mapperClass="org.jplus.hibatis.dao.PropertiesDao">
+    <methodBeans type="SELECT" resultGenericType="org.jplus.hibatis.beans.Properties" id="getAllPropertis">
+        <sql>select * from Properties</sql>
+    </methodBeans>
+    <methodBeans type="SELECT"  id="getProperty" argNames="map">
+        <sql>select * from Properties where key=$p.map.key</sql>
+    </methodBeans>
+    <methodBeans type="SELECT"  id="getPropertyByKey" argNames="key">
+        <sql>select * from Properties where key=$p.key</sql>
+    </methodBeans>
+    <methodBeans type="SAVE"  id="save" />
+    <methodBeans type="SAVE_OR_UPDATE"  id="saveOrUpdate" />
+</hibatisClassBean>

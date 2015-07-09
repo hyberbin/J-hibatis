@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+        <!--
+            TODO define vocabulary identification
+            PUBLIC ID: -//vendor//vocabulary//EN
+            SYSTEM ID: http://server/path/hibatis-mapper.dtd
+
+        -->
+
+        <!--
+            An example how to use this DTD from your XML document:
+
+            <?xml version="1.0"?>
+
+            <!DOCTYPE hibatisClassBean SYSTEM "hibatis-mapper.dtd">
+
+            <hibatisClassBean>
+            ...
+            </hibatisClassBean>
+        -->
+
+        <!--- Put your DTDDoc comment here. -->
+        <!ELEMENT hibatisClassBean (methodBeans)*>
+        <!ATTLIST hibatisClassBean mapperClass CDATA #IMPLIED>
+
+        <!--- Put your DTDDoc comment here. -->
+        <!ELEMENT methodBeans (sql)*>
+        <!ATTLIST methodBeans type (UPDATE|SELECT|EXECUTE|SAVE|SAVE_OR_UPDATE)CDATA #IMPLIED resultGenericType CDATA #IMPLIED>
+        <!ATTLIST methodBeans  resultGenericType CDATA #IMPLIED >
+        <!ATTLIST methodBeans  id CDATA #IMPLIED >
+        <!ATTLIST methodBeans  argNames CDATA #IMPLIED >
+
+        <!--- Put your DTDDoc comment here. -->
+        <!ELEMENT sql (#PCDATA)>
