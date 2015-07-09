@@ -1,5 +1,9 @@
-# J-hibatis
+### J-hibatis
+---
 
+#### 接口定义
+
+```java
 @Hibatis
 public interface PropertiesDao {
 
@@ -13,9 +17,11 @@ public interface PropertiesDao {
 
     void saveOrUpdate(Properties properties);
 }
+```
 
+#### mapper配置文件
 
-
+```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <hibatisClassBean mapperClass="org.jplus.hibatis.dao.PropertiesDao">
     <methodBeans type="SELECT" resultGenericType="org.jplus.hibatis.beans.Properties" id="getAllPropertis">
@@ -30,9 +36,11 @@ public interface PropertiesDao {
     <methodBeans type="SAVE"  id="save" />
     <methodBeans type="SAVE_OR_UPDATE"  id="saveOrUpdate" />
 </hibatisClassBean>
+```
 
+#### 测试类
 
-
+```java
 public class Test {
 
     public static void main(String[] args) {
@@ -56,3 +64,4 @@ public class Test {
         System.out.println(age.getKey()+":"+age.getValue());
     }
 }
+```
