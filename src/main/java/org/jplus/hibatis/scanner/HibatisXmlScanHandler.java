@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Hyberbin.
+ * Copyright 2015 www.hyberbin.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
 package org.jplus.hibatis.scanner;
 
 import org.jplus.contex.core.ObjectContex;
-import org.jplus.hibatis.HibatisInit;
 import org.jplus.hibatis.bean.HibatisClassBean;
 import org.jplus.hibatis.core.ConfigManagerImpl;
 import org.jplus.hibatis.core.HibatisProxy;
 import org.jplus.hyb.log.Logger;
 import org.jplus.hyb.log.LoggerManager;
-import org.jplus.scanner.IScanHandler;
+import org.jplus.scanner.AScannerHandler;
+import org.jplus.scanner.ScannerInitializer;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -33,17 +33,12 @@ import java.io.InputStream;
  *
  * @author hyberbin
  */
-public class HibatisXmlScanHandler implements IScanHandler {
+public class HibatisXmlScanHandler extends AScannerHandler {
 
     private static final Logger log = LoggerManager.getLogger(HibatisXmlScanHandler.class);
-    @Override
-    public boolean filterJar(String path) {
-        return HibatisInit.getBooleanProperty(VAR_SCAN_JAR)&&path.matches(HibatisInit.getProperty(VAR_SCAN_JAR_REGEX));
-    }
 
-    @Override
-    public boolean filterPath(String path) {
-        return path.matches(HibatisInit.getProperty(VAR_SCAN_CLASSPATH_REGEX));
+    public HibatisXmlScanHandler(ScannerInitializer scannerInitializer) {
+        super(scannerInitializer);
     }
 
     @Override

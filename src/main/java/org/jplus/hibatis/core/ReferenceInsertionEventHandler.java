@@ -16,13 +16,21 @@
  */
 package org.jplus.hibatis.core;
 
-import org.jplus.hibatis.bean.HibatisClassBean;
+import org.apache.velocity.context.Context;
+
+import java.util.List;
 
 /**
- *
- * @author hyberbin
+ * Created by hyberbin on 2015/7/10.
  */
-public interface ConfigManager {
-
-    public HibatisClassBean getHibatisBean(Class clazz);
+public class ReferenceInsertionEventHandler implements org.apache.velocity.app.event.ReferenceInsertionEventHandler{
+    @Override
+    public Object referenceInsert(Context context, String key, Object o) {
+        if(key.startsWith("$p.")){
+            List hibatisParameters = (List)context.get("hibatisParameters");
+            hibatisParameters.add(o);
+            return "?";
+        }
+        return o;
+    }
 }

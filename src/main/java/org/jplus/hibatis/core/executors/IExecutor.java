@@ -14,15 +14,17 @@
  * limitations under the License.
  * Email:hyberbin@qq.com
  */
-package org.jplus.hibatis.core;
+package org.jplus.hibatis.core.executors;
 
-import org.jplus.hibatis.bean.HibatisClassBean;
+import org.jplus.hibatis.bean.HibatisMethodBean;
+
+import java.lang.reflect.Method;
 
 /**
- *
- * @author hyberbin
+ * Created by hyberbin on 2015/7/10.
  */
-public interface ConfigManager {
+public interface IExecutor {
 
-    public HibatisClassBean getHibatisBean(Class clazz);
+    Object execute(HibatisMethodBean methodBean, Method method, Object[] args)throws Throwable;
+
 }

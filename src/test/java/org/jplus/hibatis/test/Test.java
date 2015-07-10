@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Hyberbin.
+ * Copyright 2015 www.hyberbin.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ public class Test {
         SimpleConfigurator.addConfigurator(new DbConfig(DbConfig.DRIVER_SQLITE, "jdbc:sqlite:data.db", "", "", DbConfig.DEFAULT_CONFIG_NAME));
         ConfigCenter.INSTANCE.setManager(new SimpleManager(DbConfig.DEFAULT_CONFIG_NAME));
         SqliteUtil.setProperty("name", "hyb");
+        SqliteUtil.setProperty("age", "8");
         LocalLogger.setLevel(LocalLogger.INFO);
         HibatisInit.init();
         PropertiesDao propertiesDao = ObjectContex.CONTEX.getResource(PropertiesDao.class);

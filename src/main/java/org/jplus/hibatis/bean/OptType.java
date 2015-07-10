@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Hyberbin.
+ * Copyright 2015 www.hyberbin.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,10 @@
 package org.jplus.hibatis.bean;
 
 /**
- *
  * @author hyberbin
  */
 public enum OptType {
 
-    UPDATE, SELECT, EXECUTE,SAVE,SAVE_OR_UPDATE
+    UPDATE, SELECT, EXECUTE, SAVE, SAVE_OR_UPDATE,GET_ONE_BY_KEY,DELETE_BY_KEY
 
 }

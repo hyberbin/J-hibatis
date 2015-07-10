@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Hyberbin.
+ * Copyright 2015 www.hyberbin.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,41 +18,20 @@ package org.jplus.hibatis;
 
 import org.jplus.contex.core.ObjectContex;
 import org.jplus.hibatis.scanner.HibatisXmlScanHandler;
-import org.jplus.scanner.ContexClassScanHandler;
-import org.jplus.scanner.IScanHandler;
 import org.jplus.scanner.ScannerImpl;
-
-import java.util.Properties;
+import org.jplus.scanner.ScannerInitializer;
 
 /**
  * @author hyberbin
  */
 public class HibatisInit {
 
-    private static final Properties config = new Properties();
-
-
-    static {
-        setProperties(IScanHandler.VAR_SCAN_JAR, "false");
-        setProperties(IScanHandler.VAR_SCAN_JAR_REGEX, ".*hibatis.*.\\.xml");
-        setProperties(IScanHandler.VAR_SCAN_CLASSPATH_REGEX, ".*hibatis.*.\\.xml");
-    }
-
     public static void init() {
-        ScannerImpl.INSTANCE.addScanHandler(new HibatisXmlScanHandler());
-        ScannerImpl.INSTANCE.addScanHandler(new ContexClassScanHandler());
-        ObjectContex.init();
+        init(false, ".*hibatis.*.\\.xml", ".*hibatis.*.\\.xml");
     }
 
-    public static void setProperties(String key, String value) {
-        config.setProperty(key, value);
-    }
-
-    public static boolean getBooleanProperty(String key) {
-        return Boolean.valueOf(config.getProperty(key));
-    }
-
-    public static String getProperty(String key) {
-        return config.getProperty(key);
+    public static void init(boolean needScanJar, String scanJarRegex, String scanClassPathRegex) {
+        ScannerImpl.INSTANCE.addScanHandler(new HibatisXmlScanHandler(new ScannerInitializer(needScanJar, scanJarRegex, scanClassPathRegex)));
+        ObjectContex.CONTEX.init();
     }
 }
