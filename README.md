@@ -1,4 +1,7 @@
 ### J-hibatis
+hibatis是一个极其轻量级的数据库操作框架。由hyberbin仿照mybatis编写。</br>
+CRUD操作只用定义dao接口，不必写其实现类。</br>
+支持动态SQL语句，sql语句采用velocity模板引擎生成，简单好用。</br>
 ---
 #### POJO定义
 ```java
@@ -122,7 +125,7 @@ public class PropertiesDaoTest {
         SimpleConfigurator.addConfigurator(new DbConfig(DbConfig.DRIVER_SQLITE, "jdbc:sqlite:data.db", "", "", DbConfig.DEFAULT_CONFIG_NAME));
         ConfigCenter.INSTANCE.setManager(new SimpleManager(DbConfig.DEFAULT_CONFIG_NAME));
         LocalLogger.setLevel(LocalLogger.INFO);
-        HibatisInit.init();
+        HibatisInit.init();//此处可以自定义hibatis的xml扫描路径
         propertiesDao = ObjectContext.CONTEXT.getResource(PropertiesDao.class);
     }
     
