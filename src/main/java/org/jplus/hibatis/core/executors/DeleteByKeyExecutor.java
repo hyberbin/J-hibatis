@@ -22,11 +22,13 @@ import org.jplus.hyb.database.crud.Hyberbin;
 import org.jplus.util.Reflections;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * 根据一个键删除一个对象.
  * 如果方法后只带有一个参数那么默认按照主键删除.
- * 如果方法后带有两个参数那么默认是第一个参数是说明键名，第二个参数是键值.
+ * 如果方法后带有两个参数那么默认是第一个参数是申明对象，第二个参数是键.
+ * 用该执行器的方法的第一个参数必须是PO。
  * Created by hyberbin on 2015/7/10.
  */
 public class DeleteByKeyExecutor extends AExecutor{
@@ -37,15 +39,17 @@ public class DeleteByKeyExecutor extends AExecutor{
 
     @Override
     public Object execute(HibatisMethodBean methodBean, Method method, Object[] args) throws Throwable {
-        Object po= Reflections.instance(method.getReturnType().getName());
-        Hyberbin hyberbin = new Hyberbin(po);
-        if(args.length==1){
-            Reflections.setFieldValue(po, hyberbin.getPrimaryKey(),args[0]);
-            return hyberbin.deleteByKey(hyberbin.getPrimaryKey());
-        }else if(args.length==2){
-            String key=args[0]+"";
-            Reflections.setFieldValue(po, key,args[1]);
-            return hyberbin.deleteByKey(key);
+        Object pojo= args[0];
+        Class<?> po = args[0].getClass();
+        if(po.equals(Object.class)||Reflections.isSimpleType(po)||Map.class.isAssignableFrom(po)){
+            throw new IllegalArgumentException("1st arg must be a PO!");
+        }else{
+            Hyberbin hyberbin = new Hyberbin(pojo);
+            if(args.length==1){
+                return hyberbin.deleteByKey(hyberbin.getPrimaryKey());
+            }else if(args.length==2){
+                return hyberbin.deleteByKey(args[1]+"");
+            }
         }
         throw new IllegalArgumentException("must have 1 or 2 arguments!");
     }

@@ -124,36 +124,30 @@ public class PropertiesDaoTest {
     }
 
     @Test
-    public void testGetOneByKey(){
-        System.out.println("testGetOneByKey");
-        Properties property =propertiesDao.getOneByKey("name");
+    public void testGetByKey(){
+        System.out.println("testGetByKey");
+        Properties property =new Properties ("name",null);
+        propertiesDao.getByKey(property);
         assertEquals(property.getKey(), "name");
         assertEquals(property.getValue(), "hyb");
 
-        Properties property2 =propertiesDao.getOneByKey("age");
-        assertEquals(property2.getKey(), "age");
-        assertEquals(property2.getValue(), "8");
-    }
-
-    @Test
-    public void testGetOneByKey2(){
-        System.out.println("testGetOneByKey");
-        Properties property = (Properties)propertiesDao.getOneByKey("key","name");
-        assertEquals(property.getKey(), "name");
-        assertEquals(property.getValue(), "hyb");
-
-        Properties property2 = (Properties)propertiesDao.getOneByKey("value","8");
-        assertEquals(property2.getKey(), "age");
-        assertEquals(property2.getValue(), "8");
+        Properties property2 =new Properties (null,"hyb");
+        propertiesDao.getByKey(property2,"value");
+        assertEquals(property2.getKey(), "name");
+        assertEquals(property2.getValue(), "hyb");
     }
 
     @Test
     public void testDeleteByKey(){
-        
-    }
+        System.out.println("testDeleteByKey");
+        Properties property =new Properties ("name",null);
+        propertiesDao.deleteByKey(property);
+        List<Properties> allPropertis = propertiesDao.getAllPropertis();
+        assertEquals(allPropertis.size(), 1);
 
-    @Test
-    public void testDeleteByKey2(){
-        
+        Properties property2 =new Properties (null,"8");
+        propertiesDao.deleteByKey(property2, "value");
+        List<Properties> allPropertis2 = propertiesDao.getAllPropertis();
+        assertEquals(allPropertis2.size(),0);
     }
 }

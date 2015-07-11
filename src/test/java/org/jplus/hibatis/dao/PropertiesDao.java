@@ -35,8 +35,4 @@ public interface PropertiesDao extends BaseDao<Properties>{
     Properties getProperty(Map key);
 
     Properties getPropertyByKey(String key);
-
-    Properties getOneByKey(String key);
-
-    Properties getOneByKey(String key,String value);
 }

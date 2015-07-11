@@ -26,7 +26,11 @@ public interface BaseDao<T> {
 
     void saveOrUpdate(T object);
 
-    void deleteByKey(Object value);
+    void deleteByKey(T po);
 
-    void deleteByKey(String key, Object value);
+    void deleteByKey(T po,String key);
+
+    void getByKey(T po);
+
+    void getByKey(T po,String key);
 }

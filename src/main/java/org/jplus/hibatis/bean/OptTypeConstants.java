@@ -27,7 +27,7 @@ public class OptTypeConstants {
     public static final String EXECUTE="execute";
     public static final String SAVE="save";
     public static final String SAVE_OR_UPDATE="saveOrUpdate";
-    public static final String  GET_ONE_BY_KEY="getOneByKey";
-    public static final String DELETE_BY_KEY="deleteOneByKey";
+    public static final String  GET_BY_KEY="getByKey";
+    public static final String DELETE_BY_KEY="deleteByKey";
 
 }

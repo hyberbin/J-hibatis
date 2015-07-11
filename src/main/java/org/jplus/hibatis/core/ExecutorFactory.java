@@ -38,7 +38,7 @@ public class ExecutorFactory {
         putExecutor(OptTypeConstants.EXECUTE, new ExecuteExecutor());
         putExecutor(OptTypeConstants.SAVE, new SaveExecutor());
         putExecutor(OptTypeConstants.SAVE_OR_UPDATE, new SaveOrUpdateExecutor());
-        putExecutor(OptTypeConstants.GET_ONE_BY_KEY, new GetOneByKeyExecutor());
+        putExecutor(OptTypeConstants.GET_BY_KEY, new GetByKeyExecutor());
         putExecutor(OptTypeConstants.DELETE_BY_KEY, new DeleteByKeyExecutor());
     }
 

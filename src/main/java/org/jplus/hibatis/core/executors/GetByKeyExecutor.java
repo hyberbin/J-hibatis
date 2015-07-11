@@ -27,29 +27,26 @@ import java.util.Map;
 /**
  * 根据一个键获取一个对象.
  * 如果方法后只带有一个参数那么默认按照主键获取.
- * 如果方法后带有两个参数那么默认是第一个参数是说明键名，第二个参数是键值.
- * 用该执行器的方法必须有返回类型，不能是Object
+ * 如果方法后带有两个参数那么默认是第一个参数是申明对象，第二个参数是键.
+ * 用该执行器的方法的第一个参数必须是PO。
  * Created by hyberbin on 2015/7/10.
  */
-public class GetOneByKeyExecutor extends AExecutor{
-    public GetOneByKeyExecutor() {
-        super(OptTypeConstants.GET_ONE_BY_KEY);
+public class GetByKeyExecutor extends AExecutor{
+    public GetByKeyExecutor() {
+        super(OptTypeConstants.GET_BY_KEY);
     }
     @Override
     public Object execute(HibatisMethodBean methodBean, Method method, Object[] args) throws Throwable {
-        Class<?> returnType = method.getReturnType();
-        if(returnType.equals(Object.class)||Reflections.isSimpleType(returnType)||Map.class.isAssignableFrom(returnType)){
-            throw new IllegalArgumentException("must have a PO returnType");
+        Object pojo= args[0];
+        Class<?> po = args[0].getClass();
+        if(po.equals(Object.class)||Reflections.isSimpleType(po)||Map.class.isAssignableFrom(po)){
+            throw new IllegalArgumentException("1st arg must be a PO!");
         }else{
-            Object po= Reflections.instance(returnType.getName());
-            Hyberbin hyberbin = new Hyberbin(po);
+            Hyberbin hyberbin = new Hyberbin(pojo);
             if(args.length==1){
-                Reflections.setFieldValue(po, hyberbin.getPrimaryKey(),args[0]);
                 return hyberbin.showOnebyKey(hyberbin.getPrimaryKey());
             }else if(args.length==2){
-                String key=args[0]+"";
-                Reflections.setFieldValue(po, key,args[1]);
-                return hyberbin.showOnebyKey(key);
+                return hyberbin.showOnebyKey(args[1]+"");
             }
         }
         throw new IllegalArgumentException("must have 2 arguments!");
