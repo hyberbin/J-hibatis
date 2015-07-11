@@ -16,12 +16,14 @@
  */
 package org.jplus.hibatis;
 
-import org.jplus.contex.core.ObjectContex;
+import org.jplus.contex.core.ObjectContext;
 import org.jplus.hibatis.scanner.HibatisXmlScanHandler;
 import org.jplus.scanner.ScannerImpl;
 import org.jplus.scanner.ScannerInitializer;
 
 /**
+ * 初始化扫描器的类.
+ * 默认只扫描路径中包含hibatis并且以xml结尾的文件.
  * @author hyberbin
  */
 public class HibatisInit {
@@ -32,6 +34,6 @@ public class HibatisInit {
 
     public static void init(boolean needScanJar, String scanJarRegex, String scanClassPathRegex) {
         ScannerImpl.INSTANCE.addScanHandler(new HibatisXmlScanHandler(new ScannerInitializer(needScanJar, scanJarRegex, scanClassPathRegex)));
-        ObjectContex.CONTEX.init();
+        ObjectContext.CONTEXT.init();
     }
 }

@@ -17,7 +17,7 @@
 package org.jplus.hibatis.core.executors;
 
 import org.jplus.hibatis.bean.HibatisMethodBean;
-import org.jplus.hibatis.bean.OptType;
+import org.jplus.hibatis.bean.OptTypeConstants;
 import org.jplus.hyb.database.crud.Hyberbin;
 import org.jplus.util.ObjectHelper;
 import org.jplus.util.Reflections;
@@ -25,11 +25,13 @@ import org.jplus.util.Reflections;
 import java.lang.reflect.Method;
 
 /**
+ * 保存或更新的执行器.
+ * PO中必须申明主键.
  * Created by hyberbin on 2015/7/10.
  */
 public class SaveOrUpdateExecutor extends AExecutor{
     public SaveOrUpdateExecutor() {
-        super(OptType.SAVE_OR_UPDATE);
+        super(OptTypeConstants.SAVE_OR_UPDATE);
     }
     @Override
     public Object execute(HibatisMethodBean methodBean, Method method, Object[] args) throws Throwable {

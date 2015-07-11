@@ -17,19 +17,22 @@
 package org.jplus.hibatis.core.executors;
 
 import org.jplus.hibatis.bean.HibatisMethodBean;
-import org.jplus.hibatis.bean.OptType;
+import org.jplus.hibatis.bean.OptTypeConstants;
 import org.jplus.hyb.database.crud.Hyberbin;
 import org.jplus.util.Reflections;
 
 import java.lang.reflect.Method;
 
 /**
+ * 根据一个键删除一个对象.
+ * 如果方法后只带有一个参数那么默认按照主键删除.
+ * 如果方法后带有两个参数那么默认是第一个参数是说明键名，第二个参数是键值.
  * Created by hyberbin on 2015/7/10.
  */
 public class DeleteByKeyExecutor extends AExecutor{
 
     public DeleteByKeyExecutor() {
-        super(OptType.DELETE_BY_KEY);
+        super(OptTypeConstants.DELETE_BY_KEY);
     }
 
     @Override
@@ -44,6 +47,6 @@ public class DeleteByKeyExecutor extends AExecutor{
             Reflections.setFieldValue(po, key,args[1]);
             return hyberbin.deleteByKey(key);
         }
-        throw new IllegalArgumentException("must have 2 arguments!");
+        throw new IllegalArgumentException("must have 1 or 2 arguments!");
     }
 }

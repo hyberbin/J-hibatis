@@ -17,8 +17,10 @@
 package org.jplus.hibatis.core;
 
 import org.jplus.annotation.Hibatis;
+import org.jplus.annotation.HibatisMethod;
 import org.jplus.hibatis.bean.HibatisClassBean;
 import org.jplus.hibatis.bean.HibatisMethodBean;
+import org.jplus.util.ObjectHelper;
 import org.jplus.util.Reflections;
 
 import java.lang.reflect.InvocationHandler;
@@ -28,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 代理Hibatis的类，所有的Hibatis接口都由此类代理.
  * @author hyberbin
  */
 public class HibatisProxy implements InvocationHandler {
@@ -55,7 +58,14 @@ public class HibatisProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        HibatisMethodBean methodBean = hibatisBean.getMethodBean(method.getName());
+        String methodID=method.getName();
+        if(method.isAnnotationPresent(HibatisMethod.class)){
+            HibatisMethod hibatisMethod = method.getAnnotation(HibatisMethod.class);
+            if(!ObjectHelper.isNullOrEmptyString(methodID)){
+                methodID=hibatisMethod.methodID();
+            }
+        }
+        HibatisMethodBean methodBean = hibatisBean.getMethodBean(methodID);
         return ExecutorFactory.getExecutor(methodBean.getType()).execute(methodBean,method,args);
     }
 

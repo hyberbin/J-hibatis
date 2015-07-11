@@ -17,7 +17,7 @@
 package org.jplus.hibatis.core.executors;
 
 import org.jplus.hibatis.bean.HibatisMethodBean;
-import org.jplus.hibatis.bean.OptType;
+import org.jplus.hibatis.bean.OptTypeConstants;
 import org.jplus.hyb.database.config.ConfigCenter;
 import org.jplus.hyb.database.crud.DatabaseAccess;
 import org.jplus.hyb.database.crud.Hyberbin;
@@ -29,11 +29,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 查询执行器.
  * Created by hyberbin on 2015/7/10.
  */
 public class SelectExecutor extends AExecutor {
     public SelectExecutor() {
-        super(OptType.SELECT);
+        super(OptTypeConstants.SELECT);
     }
 
     @Override

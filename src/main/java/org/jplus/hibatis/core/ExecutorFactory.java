@@ -16,33 +16,37 @@
  */
 package org.jplus.hibatis.core;
 
-import org.jplus.hibatis.bean.OptType;
+import org.jplus.hibatis.bean.OptTypeConstants;
 import org.jplus.hibatis.core.executors.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ *执行器工厂类。
+ * 用户可以用此类定义自己的执行器.
  * Created by hyberbin on 2015/7/10.
  */
 public class ExecutorFactory {
-    public static Map<OptType, IExecutor> EXECUTE_MAP = new HashMap<OptType, IExecutor>();
+    public static Map<String, IExecutor> EXECUTE_MAP = new HashMap<String, IExecutor>();
+    private ExecutorFactory(){
 
+    }
     static {
-        putExecutor(OptType.SELECT,new SelectExecutor());
-        putExecutor(OptType.UPDATE, new UpdateExecutor());
-        putExecutor(OptType.EXECUTE, new ExecuteExecutor());
-        putExecutor(OptType.SAVE, new SaveExecutor());
-        putExecutor(OptType.SAVE_OR_UPDATE, new SaveOrUpdateExecutor());
-        putExecutor(OptType.GET_ONE_BY_KEY, new GetOneByKeyExecutor());
-        putExecutor(OptType.DELETE_BY_KEY, new DeleteByKeyExecutor());
+        putExecutor(OptTypeConstants.SELECT,new SelectExecutor());
+        putExecutor(OptTypeConstants.UPDATE, new UpdateExecutor());
+        putExecutor(OptTypeConstants.EXECUTE, new ExecuteExecutor());
+        putExecutor(OptTypeConstants.SAVE, new SaveExecutor());
+        putExecutor(OptTypeConstants.SAVE_OR_UPDATE, new SaveOrUpdateExecutor());
+        putExecutor(OptTypeConstants.GET_ONE_BY_KEY, new GetOneByKeyExecutor());
+        putExecutor(OptTypeConstants.DELETE_BY_KEY, new DeleteByKeyExecutor());
     }
 
-    public static IExecutor getExecutor(OptType type) {
-        return EXECUTE_MAP.get(type);
+    public static IExecutor getExecutor(String type) {
+        return EXECUTE_MAP.get(type.toLowerCase());
     }
 
-    public static void putExecutor(OptType type,IExecutor executor) {
-        EXECUTE_MAP.put(type,executor);
+    public static void putExecutor(String type,IExecutor executor) {
+        EXECUTE_MAP.put(type.toLowerCase(),executor);
     }
 }

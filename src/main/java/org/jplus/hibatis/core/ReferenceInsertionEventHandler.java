@@ -21,6 +21,8 @@ import org.apache.velocity.context.Context;
 import java.util.List;
 
 /**
+ * velocity解析变量的监听器.
+ * 如果变量名是以$p.开头的就会将该参数进行预处理.
  * Created by hyberbin on 2015/7/10.
  */
 public class ReferenceInsertionEventHandler implements org.apache.velocity.app.event.ReferenceInsertionEventHandler{

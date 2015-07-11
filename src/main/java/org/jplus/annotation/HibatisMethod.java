@@ -14,13 +14,19 @@
  * limitations under the License.
  * Email:hyberbin@qq.com
  */
-package org.jplus.hibatis.bean;
+package org.jplus.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * @author hyberbin
+ * 如果方法名和ID不一致可以加此注解说明
+ * Created by hyberbin on 2015/7/11.
  */
-public enum OptType {
-
-    UPDATE, SELECT, EXECUTE, SAVE, SAVE_OR_UPDATE,GET_ONE_BY_KEY,DELETE_BY_KEY
-
+@Target({ElementType.METHOD})//该注解只能用在方法名上
+@Retention(RetentionPolicy.RUNTIME)
+public @interface HibatisMethod {
+    String methodID() default "";
 }

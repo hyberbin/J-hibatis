@@ -17,18 +17,19 @@
 package org.jplus.hibatis.core.executors;
 
 import org.jplus.hibatis.bean.HibatisMethodBean;
-import org.jplus.hibatis.bean.OptType;
+import org.jplus.hibatis.bean.OptTypeConstants;
 import org.jplus.hyb.database.config.ConfigCenter;
 import org.jplus.hyb.database.crud.DatabaseAccess;
 
 import java.lang.reflect.Method;
 
 /**
+ * 直接执行Sql的执行器实现类.
  * Created by hyberbin on 2015/7/10.
  */
 public class ExecuteExecutor extends AExecutor {
     public ExecuteExecutor() {
-        super(OptType.EXECUTE);
+        super(OptTypeConstants.EXECUTE);
     }
 
     @Override

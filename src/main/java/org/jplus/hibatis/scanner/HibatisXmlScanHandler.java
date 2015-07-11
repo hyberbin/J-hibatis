@@ -16,7 +16,7 @@
  */
 package org.jplus.hibatis.scanner;
 
-import org.jplus.contex.core.ObjectContex;
+import org.jplus.contex.core.ObjectContext;
 import org.jplus.hibatis.bean.HibatisClassBean;
 import org.jplus.hibatis.core.ConfigManagerImpl;
 import org.jplus.hibatis.core.HibatisProxy;
@@ -30,7 +30,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.InputStream;
 
 /**
- *
+ * Hibatis配置文件扫描器.
  * @author hyberbin
  */
 public class HibatisXmlScanHandler extends AScannerHandler {
@@ -41,13 +41,19 @@ public class HibatisXmlScanHandler extends AScannerHandler {
         super(scannerInitializer);
     }
 
+    /**
+     * 用JAXB技术将XML文件转换成HibatisClassBean.
+     * 转换完成后将实例放入ObjectContext中.
+     * @param is
+     * @throws Exception
+     */
     @Override
     public void dealWith(InputStream is) throws Exception {
         JAXBContext context = JAXBContext.newInstance(HibatisClassBean.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         HibatisClassBean unmarshal = (HibatisClassBean) unmarshaller.unmarshal(is);
         ConfigManagerImpl.put(unmarshal.getMapperClass(), unmarshal);
-        ObjectContex.CONTEX.setService(unmarshal.getMapperClass(), new HibatisProxy().bind(unmarshal.getMapperClass()));
+        ObjectContext.CONTEXT.setService(unmarshal.getMapperClass(), new HibatisProxy().bind(unmarshal.getMapperClass()));
         log.debug("load hibatis xml .mapperClassName:{}", unmarshal.getMapperClass().getName());
     }
 }

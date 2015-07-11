@@ -21,6 +21,7 @@ import org.jplus.hibatis.bean.HibatisMethodBean;
 import java.lang.reflect.Method;
 
 /**
+ * 执行器接口
  * Created by hyberbin on 2015/7/10.
  */
 public interface IExecutor {

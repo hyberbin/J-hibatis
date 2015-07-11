@@ -16,14 +16,15 @@
  */
 package org.jplus.annotation;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import org.jplus.hibatis.core.ConfigManager;
 import org.jplus.hibatis.core.ConfigManagerImpl;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- *
+ *只有带有此注解的接口才会被Hibatis代理
  * @author hyberbin
  */
 @Target({java.lang.annotation.ElementType.TYPE})//该注解只能用在类上

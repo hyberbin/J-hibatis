@@ -14,29 +14,20 @@
  * limitations under the License.
  * Email:hyberbin@qq.com
  */
-package org.jplus.hibatis.dao;
-
-import org.jplus.annotation.Hibatis;
-import org.jplus.hibatis.beans.Properties;
-import org.jplus.hibatis.core.BaseDao;
-
-import java.util.List;
-import java.util.Map;
+package org.jplus.hibatis.bean;
 
 /**
- *
+ * 默认加这几种操作
  * @author hyberbin
  */
-@Hibatis
-public interface PropertiesDao extends BaseDao<Properties>{
+public class OptTypeConstants {
 
-    List<Properties> getAllPropertis();
+    public static final String UPDATE="update";
+    public static final String  SELECT="select";
+    public static final String EXECUTE="execute";
+    public static final String SAVE="save";
+    public static final String SAVE_OR_UPDATE="saveOrUpdate";
+    public static final String  GET_ONE_BY_KEY="getOneByKey";
+    public static final String DELETE_BY_KEY="deleteOneByKey";
 
-    Properties getProperty(Map key);
-
-    Properties getPropertyByKey(String key);
-
-    Properties getOneByKey(String key);
-
-    Properties getOneByKey(String key,String value);
 }

@@ -53,6 +53,12 @@ public class HibatisClassBean {
 
     public HibatisMethodBean getMethodBean(String id) {
         if(Method_Map.isEmpty()){
+            //下面加入几个默认或者继承的方法
+            Method_Map.put("save", new HibatisMethodBean("save","save"));
+            Method_Map.put("saveOrUpdate", new HibatisMethodBean("saveOrUpdate","saveOrUpdate"));
+            Method_Map.put("deleteOneByKey", new HibatisMethodBean("deleteOneByKey","deleteOneByKey"));
+            Method_Map.put("getOneByKey", new HibatisMethodBean("getOneByKey","getOneByKey"));
+            //加载从配置文件获取的方法
             for (HibatisMethodBean methodBean : methodBeans) {
                 Method_Map.put(methodBean.getId(), methodBean);
             }

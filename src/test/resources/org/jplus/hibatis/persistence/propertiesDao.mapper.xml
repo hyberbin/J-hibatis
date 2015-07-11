@@ -9,8 +9,4 @@
     <methodBeans type="SELECT"  id="getPropertyByKey" argNames="key">
         <sql>select * from Properties where key=$p.key</sql>
     </methodBeans>
-    <methodBeans type="SAVE"  id="save" />
-    <methodBeans type="SAVE_OR_UPDATE"  id="saveOrUpdate" />
-    <methodBeans type="GET_ONE_BY_KEY"  id="getOneByKey" />
-    <methodBeans type="DELETE_BY_KEY"  id="deleteByKey" />
 </hibatisClassBean>

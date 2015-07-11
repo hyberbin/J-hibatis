@@ -28,13 +28,21 @@ public class HibatisMethodBean {
     /** 方法ID */
     private String id;
     /** 操作类型 */
-    private OptType type;
+    private String type;
     /** SQL语句 */
     private String sql;
     /** 如果返回类型是List集合则要申明集合内的元素类型 */
     private Class resultGenericType;
 
     private String[] argNames;
+
+    public HibatisMethodBean() {
+    }
+
+    public HibatisMethodBean(String id, String type) {
+        this.id = id;
+        this.type = type;
+    }
 
     @XmlAttribute(required = true)
     public String getId() {
@@ -46,11 +54,11 @@ public class HibatisMethodBean {
     }
 
     @XmlAttribute(required = true)
-    public OptType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(OptType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

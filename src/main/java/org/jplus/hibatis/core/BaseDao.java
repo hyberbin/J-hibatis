@@ -14,29 +14,19 @@
  * limitations under the License.
  * Email:hyberbin@qq.com
  */
-package org.jplus.hibatis.dao;
-
-import org.jplus.annotation.Hibatis;
-import org.jplus.hibatis.beans.Properties;
-import org.jplus.hibatis.core.BaseDao;
-
-import java.util.List;
-import java.util.Map;
+package org.jplus.hibatis.core;
 
 /**
- *
- * @author hyberbin
+ * 基础的dao接口.
+ * 继承这个接口的dao中不必再在配置文件中申明方法.
+ * Created by hyberbin on 2015/7/10.
  */
-@Hibatis
-public interface PropertiesDao extends BaseDao<Properties>{
+public interface BaseDao<T> {
+    void save(T object);
 
-    List<Properties> getAllPropertis();
+    void saveOrUpdate(T object);
 
-    Properties getProperty(Map key);
+    void deleteByKey(Object value);
 
-    Properties getPropertyByKey(String key);
-
-    Properties getOneByKey(String key);
-
-    Properties getOneByKey(String key,String value);
+    void deleteByKey(String key, Object value);
 }

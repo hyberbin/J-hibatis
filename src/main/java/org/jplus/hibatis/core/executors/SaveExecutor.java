@@ -17,7 +17,7 @@
 package org.jplus.hibatis.core.executors;
 
 import org.jplus.hibatis.bean.HibatisMethodBean;
-import org.jplus.hibatis.bean.OptType;
+import org.jplus.hibatis.bean.OptTypeConstants;
 import org.jplus.hyb.database.crud.Hyberbin;
 import org.jplus.util.ObjectHelper;
 import org.jplus.util.Reflections;
@@ -25,11 +25,12 @@ import org.jplus.util.Reflections;
 import java.lang.reflect.Method;
 
 /**
+ * 保存对象的执行器
  * Created by hyberbin on 2015/7/10.
  */
 public class SaveExecutor extends AExecutor{
     public SaveExecutor() {
-        super(OptType.SAVE);
+        super(OptTypeConstants.SAVE);
     }
     @Override
     public Object execute(HibatisMethodBean methodBean, Method method, Object[] args) throws Throwable {
