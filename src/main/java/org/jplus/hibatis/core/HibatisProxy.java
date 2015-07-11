@@ -58,14 +58,17 @@ public class HibatisProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        String methodID=method.getName();
+        String methodID=method.getName();//默认methodID就是方法名
         if(method.isAnnotationPresent(HibatisMethod.class)){
             HibatisMethod hibatisMethod = method.getAnnotation(HibatisMethod.class);
             if(!ObjectHelper.isNullOrEmptyString(methodID)){
-                methodID=hibatisMethod.methodID();
+                methodID=hibatisMethod.methodID();//如果方法上带有HibatisMethod注解则以注解中的ID为准
             }
         }
         HibatisMethodBean methodBean = hibatisBean.getMethodBean(methodID);
+        if(methodBean==null){
+            throw new IllegalArgumentException("can't find xml for class:"+method.getDeclaringClass().getName()+" method:"+method.getName());
+        }
         return ExecutorFactory.getExecutor(methodBean.getType()).execute(methodBean,method,args);
     }
 

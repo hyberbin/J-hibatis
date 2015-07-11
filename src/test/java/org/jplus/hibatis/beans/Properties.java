@@ -23,7 +23,7 @@ import javax.persistence.Id;
  * @author hyberbin
  */
 public class Properties {
-@Id
+    @Id
     private String key;
     private String value;
 
