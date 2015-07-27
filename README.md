@@ -2,7 +2,7 @@
 
 * hibatis是一个极其轻量级的数据库操作框架。由hyberbin仿照mybatis编写。
 
-* CRUD操作只用定义dao接口，不必写其实现类。
+* CRUD操作只用定义dao接口，不必写其实现类。底层数据操作工具是https://github.com/hyberbin/J-hyberbin.
 
 * 支持动态SQL语句，sql语句采用velocity模板引擎生成，简单好用。
 
