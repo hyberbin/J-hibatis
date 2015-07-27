@@ -6,6 +6,8 @@
 
 * 支持动态SQL语句，sql语句采用velocity模板引擎生成，简单好用。
 
+* 支持Dao继承，配置比mybatis简单多了。 
+
 ---
 #### POJO定义
 ```java
