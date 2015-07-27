@@ -22,12 +22,12 @@ package org.jplus.hibatis.bean;
  */
 public class OptTypeConstants {
 
-    public static final String UPDATE="update";
-    public static final String  SELECT="select";
-    public static final String EXECUTE="execute";
-    public static final String SAVE="save";
-    public static final String SAVE_OR_UPDATE="saveOrUpdate";
-    public static final String  GET_BY_KEY="getByKey";
-    public static final String DELETE_BY_KEY="deleteByKey";
+    public static final String UPDATE="UPDATE";
+    public static final String  SELECT="SELECT";
+    public static final String EXECUTE="EXECUTE";
+    public static final String SAVE="SAVE";
+    public static final String SAVE_OR_UPDATE="SAVE_OR_UPDATE";
+    public static final String  GET_BY_KEY="GET_BY_KEY";
+    public static final String DELETE_BY_KEY="DELETE_BY_KEY";
 
 }

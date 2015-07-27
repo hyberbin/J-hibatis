@@ -21,7 +21,7 @@ import java.util.Map;
 import org.jplus.hibatis.bean.HibatisClassBean;
 
 /**
- *
+ * 用于缓存所有的mapper.xml与类的映射关系.
  * @author hyberbin
  */
 public class ConfigManagerImpl implements ConfigManager {

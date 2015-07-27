@@ -16,11 +16,14 @@
  */
 package org.jplus.hibatis.core;
 
+import org.jplus.annotation.Hibatis;
+
 /**
  * 基础的dao接口.
  * 继承这个接口的dao中不必再在配置文件中申明方法.
  * Created by hyberbin on 2015/7/10.
  */
+@Hibatis
 public interface BaseDao<T> {
     void save(T object);
 

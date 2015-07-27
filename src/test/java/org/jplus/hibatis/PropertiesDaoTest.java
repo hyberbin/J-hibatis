@@ -148,6 +148,7 @@ public class PropertiesDaoTest {
         Properties property2 =new Properties (null,"8");
         propertiesDao.deleteByKey(property2, "value");
         List<Properties> allPropertis2 = propertiesDao.getAllPropertis();
-        assertEquals(allPropertis2.size(),0);
+        assertEquals(allPropertis2.size(), 0);
     }
+
 }

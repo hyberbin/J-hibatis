@@ -20,6 +20,7 @@ import org.jplus.annotation.Hibatis;
 import org.jplus.annotation.HibatisMethod;
 import org.jplus.hibatis.bean.HibatisClassBean;
 import org.jplus.hibatis.bean.HibatisMethodBean;
+import org.jplus.hibatis.core.executors.IExecutor;
 import org.jplus.util.ObjectHelper;
 import org.jplus.util.Reflections;
 
@@ -36,8 +37,7 @@ import java.util.Map;
 public class HibatisProxy implements InvocationHandler {
 
     private static final Map<Class, ConfigManager> CONFIG_MANAGER = new HashMap<Class, ConfigManager>();
-
-    private HibatisClassBean hibatisBean;
+    private static final Map<Method, HibatisMethodBean> HIBATIS_METHOD_MANAGER = new HashMap<Method, HibatisMethodBean>();
 
     /**
      * 绑定委托对象并返回一个代理类
@@ -46,11 +46,7 @@ public class HibatisProxy implements InvocationHandler {
      * @return
      */
     public Object bind(Class clazz) {
-        if (clazz.isAnnotationPresent(Hibatis.class)) {
-            Hibatis annotation = (Hibatis) clazz.getAnnotation(Hibatis.class);
-            ConfigManager configManager = getConfigManager(annotation.configManager());
-            hibatisBean = configManager.getHibatisBean(clazz);
-        } else {
+        if (!clazz.isAnnotationPresent(Hibatis.class)) {
             throw new IllegalArgumentException("不能代理非Hibatis对象");
         }
         return Proxy.newProxyInstance(HibatisProxy.class.getClassLoader(), new Class[]{clazz}, this);
@@ -58,17 +54,7 @@ public class HibatisProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        String methodID=method.getName();//默认methodID就是方法名
-        if(method.isAnnotationPresent(HibatisMethod.class)){
-            HibatisMethod hibatisMethod = method.getAnnotation(HibatisMethod.class);
-            if(!ObjectHelper.isNullOrEmptyString(methodID)){
-                methodID=hibatisMethod.methodID();//如果方法上带有HibatisMethod注解则以注解中的ID为准
-            }
-        }
-        HibatisMethodBean methodBean = hibatisBean.getMethodBean(methodID);
-        if(methodBean==null){
-            throw new IllegalArgumentException("can't find xml for class:"+method.getDeclaringClass().getName()+" method:"+method.getName());
-        }
+        HibatisMethodBean methodBean=getHibatisMethodBean(method);
         return ExecutorFactory.getExecutor(methodBean.getType()).execute(methodBean,method,args);
     }
 
@@ -79,5 +65,32 @@ public class HibatisProxy implements InvocationHandler {
             CONFIG_MANAGER.put(clazz, get);
         }
         return get;
+    }
+
+    private HibatisMethodBean getHibatisMethodBean(Method method) {
+        HibatisMethodBean methodBean = HIBATIS_METHOD_MANAGER.get(method);
+        if (methodBean == null) {
+            Class<?> declaringClass = method.getDeclaringClass();
+            if (declaringClass.isAnnotationPresent(Hibatis.class)) {
+                Hibatis annotation = declaringClass.getAnnotation(Hibatis.class);
+                ConfigManager configManager = getConfigManager(annotation.configManager());
+                HibatisClassBean hibatisBean = configManager.getHibatisBean(declaringClass);
+                String methodID = method.getName();//默认methodID就是方法名
+                if (method.isAnnotationPresent(HibatisMethod.class)) {
+                    HibatisMethod hibatisMethod = method.getAnnotation(HibatisMethod.class);
+                    if (!ObjectHelper.isNullOrEmptyString(methodID)) {
+                        methodID = hibatisMethod.methodID();//如果方法上带有HibatisMethod注解则以注解中的ID为准
+                    }
+                }
+                methodBean = hibatisBean.getMethodBean(methodID);
+                if (methodBean == null) {
+                    throw new IllegalArgumentException("can't find xml for class:" + declaringClass.getName() + " method:" + method.getName());
+                }
+                HIBATIS_METHOD_MANAGER.put(method, methodBean);
+            }else {
+                throw new IllegalArgumentException("不能代理非Hibatis对象");
+            }
+        }
+        return methodBean;
     }
 }
