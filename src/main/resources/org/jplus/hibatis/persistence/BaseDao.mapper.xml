@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hibatisClassBean mapperClass="org.jplus.hibatis.core.BaseDao">
+    <methodBeans type="SAVE" id="save"/>/
+    <methodBeans type="SAVE_OR_UPDATE"  id="saveOrUpdate"/>
+    <methodBeans type="DELETE_BY_KEY"  id="deleteByKey"/>
+    <methodBeans type="GET_BY_KEY"  id="getByKey"/>
+</hibatisClassBean>
