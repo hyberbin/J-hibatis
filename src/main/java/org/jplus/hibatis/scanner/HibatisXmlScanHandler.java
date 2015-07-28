@@ -48,7 +48,7 @@ public class HibatisXmlScanHandler extends AScannerHandler {
      * @throws Exception
      */
     @Override
-    public void dealWith(InputStream is) throws Exception {
+    public void dealWith(InputStream is,String filePath,String packagePath) throws Exception {
         JAXBContext context = JAXBContext.newInstance(HibatisClassBean.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         HibatisClassBean unmarshal = (HibatisClassBean) unmarshaller.unmarshal(is);
