@@ -29,7 +29,7 @@ import org.jplus.scanner.ScannerInitializer;
 public class HibatisInit {
 
     public static void init() {
-        init(false, ".*hibatis.*.\\.xml", ".*hibatis.*.\\.xml");
+        init(false, ".*", ".*hibatis.*xml");
     }
 
     public static void init(boolean needScanJar, String scanJarRegex, String scanClassPathRegex) {
