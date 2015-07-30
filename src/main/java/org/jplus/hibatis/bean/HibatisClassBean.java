@@ -23,7 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * Hibatis对象的配置信息.
+ * 一般是从配置文件读取的该配置.
  * @author hyberbin
  */
 @XmlRootElement
@@ -31,6 +32,7 @@ public class HibatisClassBean {
 
     /** 映射的类 */
     private Class mapperClass;
+    /**类中的方法*/
     private List<HibatisMethodBean> methodBeans;
     private final Map<String, HibatisMethodBean> Method_Map = new HashMap<String, HibatisMethodBean>();
 

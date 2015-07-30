@@ -19,7 +19,7 @@ package org.jplus.hibatis.core;
 import org.jplus.hibatis.bean.HibatisClassBean;
 
 /**
- *
+ * 获取一个接口的配置信息.
  * @author hyberbin
  */
 public interface ConfigManager {

@@ -53,7 +53,7 @@ public class HibatisXmlScanHandler extends AScannerHandler {
         Unmarshaller unmarshaller = context.createUnmarshaller();
         HibatisClassBean unmarshal = (HibatisClassBean) unmarshaller.unmarshal(is);
         ConfigManagerImpl.put(unmarshal.getMapperClass(), unmarshal);
-        ObjectContext.CONTEXT.setService(unmarshal.getMapperClass(), new HibatisProxy().bind(unmarshal.getMapperClass()));
+        ObjectContext.CONTEXT.addResource(unmarshal.getMapperClass(), new HibatisProxy().bind(unmarshal.getMapperClass()));
         log.debug("load hibatis xml .mapperClassName:{}", unmarshal.getMapperClass().getName());
     }
 }

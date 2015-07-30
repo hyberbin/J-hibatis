@@ -38,7 +38,7 @@ public class HibatisProxy implements InvocationHandler {
 
     private static final Map<Class, ConfigManager> CONFIG_MANAGER = new HashMap<Class, ConfigManager>();
     private static final Map<Method, HibatisMethodBean> HIBATIS_METHOD_MANAGER = new HashMap<Method, HibatisMethodBean>();
-
+    private Class target;
     /**
      * 绑定委托对象并返回一个代理类
      *
@@ -49,15 +49,30 @@ public class HibatisProxy implements InvocationHandler {
         if (!clazz.isAnnotationPresent(Hibatis.class)) {
             throw new IllegalArgumentException("不能代理非Hibatis对象");
         }
+        this.target=clazz;
         return Proxy.newProxyInstance(HibatisProxy.class.getClassLoader(), new Class[]{clazz}, this);
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Class<?> declaringClass = method.getDeclaringClass();
+        if (declaringClass.equals(Object.class)) {
+            if(method.getName().equals("getClass")){
+                return target;
+            }
+            return method.invoke(this,args);
+        } else if (!declaringClass.isAnnotationPresent(Hibatis.class)) {
+            return method.invoke(proxy,args);
+        }
         HibatisMethodBean methodBean=getHibatisMethodBean(method);
         return ExecutorFactory.getExecutor(methodBean.getType()).execute(methodBean,method,args);
     }
 
+    /**
+     * 获取Hibatis的配置管理器.
+     * @param clazz
+     * @return
+     */
     private ConfigManager getConfigManager(Class clazz) {
         ConfigManager get = CONFIG_MANAGER.get(clazz);
         if (get == null) {
@@ -67,29 +82,30 @@ public class HibatisProxy implements InvocationHandler {
         return get;
     }
 
+    /**
+     * 获取一个Hibatis方法的配置信息.
+     * @param method
+     * @return
+     */
     private HibatisMethodBean getHibatisMethodBean(Method method) {
         HibatisMethodBean methodBean = HIBATIS_METHOD_MANAGER.get(method);
         if (methodBean == null) {
             Class<?> declaringClass = method.getDeclaringClass();
-            if (declaringClass.isAnnotationPresent(Hibatis.class)) {
-                Hibatis annotation = declaringClass.getAnnotation(Hibatis.class);
-                ConfigManager configManager = getConfigManager(annotation.configManager());
-                HibatisClassBean hibatisBean = configManager.getHibatisBean(declaringClass);
-                String methodID = method.getName();//默认methodID就是方法名
-                if (method.isAnnotationPresent(HibatisMethod.class)) {
-                    HibatisMethod hibatisMethod = method.getAnnotation(HibatisMethod.class);
-                    if (!ObjectHelper.isNullOrEmptyString(methodID)) {
-                        methodID = hibatisMethod.methodID();//如果方法上带有HibatisMethod注解则以注解中的ID为准
-                    }
+            Hibatis annotation = declaringClass.getAnnotation(Hibatis.class);
+            ConfigManager configManager = getConfigManager(annotation.configManager());
+            HibatisClassBean hibatisBean = configManager.getHibatisBean(declaringClass);
+            String methodID = method.getName();//默认methodID就是方法名
+            if (method.isAnnotationPresent(HibatisMethod.class)) {
+                HibatisMethod hibatisMethod = method.getAnnotation(HibatisMethod.class);
+                if (!ObjectHelper.isNullOrEmptyString(methodID)) {
+                    methodID = hibatisMethod.methodID();//如果方法上带有HibatisMethod注解则以注解中的ID为准
                 }
-                methodBean = hibatisBean.getMethodBean(methodID);
-                if (methodBean == null) {
-                    throw new IllegalArgumentException("can't find xml for class:" + declaringClass.getName() + " method:" + method.getName());
-                }
-                HIBATIS_METHOD_MANAGER.put(method, methodBean);
-            }else {
-                throw new IllegalArgumentException("不能代理非Hibatis对象");
             }
+            methodBean = hibatisBean.getMethodBean(methodID);
+            if (methodBean == null) {
+                throw new IllegalArgumentException("can't find xml for class:" + declaringClass.getName() + " method:" + method.getName());
+            }
+            HIBATIS_METHOD_MANAGER.put(method, methodBean);
         }
         return methodBean;
     }
