@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -84,7 +85,7 @@ public class PropertiesDaoTest {
     public void testGetProperty() {
         System.out.println("getProperty");
         Map map = new HashMap();
-        map.put("key","name");
+        map.put("key", "name");
         Properties property = propertiesDao.getProperty(map);
         assertEquals(property.getKey(), "name");
         assertEquals(property.getValue(), "hyb");
@@ -149,6 +150,16 @@ public class PropertiesDaoTest {
         propertiesDao.deleteByKey(property2, "value");
         List<Properties> allPropertis2 = propertiesDao.getAllPropertis();
         assertEquals(allPropertis2.size(), 0);
+    }
+    @Test
+    public void testExecute(){
+        System.out.println("testExecute");
+        Integer count=propertiesDao.execute("delete from Properties where 1=2");
+        assertTrue(count==0);
+        Map map=new HashMap();
+        map.put("key",4);
+        Integer count2=propertiesDao.execute("delete from Properties where 1=$p.map.key",map);
+        assertTrue(count2==0);
     }
 
 }

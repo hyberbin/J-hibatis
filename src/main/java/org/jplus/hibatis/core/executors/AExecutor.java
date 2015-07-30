@@ -69,9 +69,9 @@ public abstract class AExecutor implements IExecutor{
         if (args != null) {
             for (int i = 0; i < args.length; i++) {
                 //将所有的参数放入context以便动态组装Sql
-                context.put(methodBean.getArgNames()[i], args[i]);
+                context.put(methodBean.getArgNameArrays()[i], args[i]);
                 //将所有的参数放入varMap以便预处理Sql参数
-                varMap.put(methodBean.getArgNames()[i], args[i]);
+                varMap.put(methodBean.getArgNameArrays()[i], args[i]);
             }
         }
         context.put("p", varMap);//将varMap放到context以便ReferenceInsertionEventHandler获取

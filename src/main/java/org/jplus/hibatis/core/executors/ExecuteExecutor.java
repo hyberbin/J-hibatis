@@ -35,6 +35,9 @@ public class ExecuteExecutor extends AExecutor {
     @Override
     public Object execute(HibatisMethodBean methodBean, Method method, Object[] args) throws Throwable {
         DatabaseAccess databaseAccess = new DatabaseAccess(ConfigCenter.INSTANCE.getManager());
+        if(methodBean.getSql()==null&&args.length<=2){
+            methodBean.setSql(args[0].toString());
+        }
         return databaseAccess.update(getSqlUseVelocity(methodBean, args, databaseAccess));
     }
 }

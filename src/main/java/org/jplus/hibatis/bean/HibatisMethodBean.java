@@ -34,7 +34,7 @@ public class HibatisMethodBean {
     /** 如果返回类型是List集合则要申明集合内的元素类型 */
     private Class resultGenericType;
 
-    private String[] argNames;
+    private String argNames;
 
     public HibatisMethodBean() {
     }
@@ -79,12 +79,17 @@ public class HibatisMethodBean {
     public void setResultGenericType(Class resultGenericType) {
         this.resultGenericType = resultGenericType;
     }
+
+    public String[] getArgNameArrays() {
+        return argNames.split(",");
+    }
+
     @XmlAttribute(required = false)
-    public String[] getArgNames() {
+    public String getArgNames() {
         return argNames;
     }
 
-    public void setArgNames(String[] argNames) {
+    public void setArgNames(String argNames) {
         this.argNames = argNames;
     }
 }

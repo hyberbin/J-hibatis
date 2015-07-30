@@ -4,4 +4,6 @@
     <methodBeans type="SAVE_OR_UPDATE"  id="saveOrUpdate"/>
     <methodBeans type="DELETE_BY_KEY"  id="deleteByKey"/>
     <methodBeans type="GET_BY_KEY"  id="getByKey"/>
+    <methodBeans type="EXECUTE"  id="execute" argNames="sql"/>
+    <methodBeans type="EXECUTE"  id="execute2" argNames="sql,map"/>
 </hibatisClassBean>

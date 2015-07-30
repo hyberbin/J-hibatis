@@ -14,34 +14,22 @@
  * limitations under the License.
  * Email:hyberbin@qq.com
  */
-package org.jplus.hibatis.core;
+package org.jplus.hibatis;
 
-import org.jplus.annotation.Hibatis;
-import org.jplus.annotation.HibatisMethod;
+import org.jplus.contex.aop.AopHandler;
+import org.jplus.hyb.database.config.ConfigCenter;
 
-import java.util.Map;
+import java.lang.reflect.Method;
+import java.sql.Connection;
 
 /**
- * 基础的dao接口.
- * 继承这个接口的dao中不必再在配置文件中申明方法.
- * Created by hyberbin on 2015/7/10.
+ * Created by hyberbin on 15/7/30.
  */
-@Hibatis
-public interface BaseDao<T> {
-    void save(T object);
-
-    void saveOrUpdate(T object);
-
-    void deleteByKey(T po);
-
-    void deleteByKey(T po,String key);
-
-    void getByKey(T po);
-
-    void getByKey(T po,String key);
-
-    int execute(String sql);
-
-    @HibatisMethod(methodID = "execute2")
-    int execute(String sql,Map map);
+public class AopTransactionHandler implements AopHandler {
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println("我切入了,在这里我做了一件事,提交了事务");
+        ConfigCenter.INSTANCE.getManager().commit();
+        return null;
+    }
 }
